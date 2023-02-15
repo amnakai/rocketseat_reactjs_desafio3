@@ -44,6 +44,17 @@ export const ProfileHeader = styled.div`
     a {
         font-size: 0.75rem;
         color: ${(props) => props.theme['blue']};
+        text-decoration: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: ${(props) => props.theme['blue']};
+        text-decoration: none;
     }
 
 `
@@ -110,5 +121,26 @@ export const PostListContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    margin-top: 2rem
+    margin-top: 2rem;
+
+    a {
+        text-decoration: none;
+        color: ${(props) => props.theme['base_text']};
+    }
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: ${(props) => props.theme['base_text']};
+    }
+
+    &:active {
+        text-decoration: none;
+        color: ${(props) => props.theme['base_text']};
+    }
+
+    &:visited {
+        text-decoration: none;
+        color: ${(props) => props.theme['base_text']};
+    }
 `

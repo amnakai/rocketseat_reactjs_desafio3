@@ -5,9 +5,15 @@ export const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
     background: ${(props) => props.theme['base_post']};
+    border: 1px solid ${(props) => props.theme['base_post']};
     border-radius: 10px;
     height: 16.25rem;
     padding: 2rem;
+    max-width: 24.5rem; 
+
+    &:hover {
+        border: 1px solid white;
+    }
 `
 
 export const PostTitle = styled.div`

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const HeaderContainer = styled.header`
   background-color: #1562AF34;
-  background-image: url("src/assets/effect_l.png"), url("src/assets/effect_r.png");;
+  background-image: url("/src/assets/effect_l.png"), url("/src/assets/effect_r.png");;
   background-position: left, right;
   background-repeat: no-repeat;
   padding: 4rem 0 8.375rem;

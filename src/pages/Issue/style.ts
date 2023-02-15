@@ -31,7 +31,18 @@ export const IssueTitleLinks = styled.div`
     a {
         font-size: 0.75rem;
         color: ${(props) => props.theme['blue']};
+        text-decoration: none;
     }
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    &:active {
+        color: ${(props) => props.theme['blue']};
+        text-decoration: none;
+    }                   
 
 `
 
@@ -61,4 +72,20 @@ export const IssueContent = styled.div`
     width: 100%;
     color: ${(props) => props.theme['base_text']};
     padding: 2rem 2.5rem;
+
+    p {
+        margin-top: 1rem
+    }
+
+    code {
+        display: block;
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: ${(props) => props.theme['base_post']};
+    }
+
+    .line-break {
+        white-space: pre-wrap;
+    }
+
 `

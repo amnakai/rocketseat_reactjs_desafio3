@@ -1,19 +1,26 @@
 import { PostContainer, PostText, PostTitle } from "./style";
+import { formatDistanceToNow, formatDistanceStrict } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
-export function Post() {
+export function Post(props: any) {
     return (
         <PostContainer>
             <PostTitle>
                 <strong>
-                    Javascript data types and data structures
+                    {props.title}
                 </strong>
                 <span>
-                    Há 1 dia
+                    {formatDistanceStrict(new Date(props.created_at), new Date(), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
                 </span>
             </PostTitle>
 
             <PostText>
-                Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn. Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
+                <ReactMarkdown children={props.body || ''} remarkPlugins={[remarkGfm]} ></ReactMarkdown>
             </PostText>
         </PostContainer>
     )

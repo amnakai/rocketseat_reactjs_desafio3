@@ -1,29 +1,71 @@
-import { ArrowSquareOut,  Buildings, Calendar, CaretLeft, Cat, ChatCircle, User } from "phosphor-react";
-import { IssueContainer,  IssueTitleContainer,  IssuTitle, IssueTitleFooter, IssueTitleLinks, PublicationCounterContainer, PublicationSearchForm, IssueContent } from "./style";
+import { ArrowSquareOut,  Buildings, Calendar, CaretLeft, Cat, ChatCircle } from "phosphor-react";
+import { IssueContainer,  IssueTitleContainer,  IssuTitle, IssueTitleFooter, IssueTitleLinks, IssueContent } from "./style";
+import { api } from '../../lib/axios'
+import { useState } from "react";
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+import { NavLink, useParams } from "react-router-dom";
+
+interface IssueInterface {
+    number: number,
+    user: {
+        login: String
+    },
+    title: string,
+    body: string,
+    created_at: string,
+    comments: number,
+    html_url: string
+}
 
 export function Issue() {
+    const routeParams = useParams();
+
+    const [issue, setIssue] = useState<IssueInterface | undefined>();
+
+    const fetchIssue = async function(issueNumber: number) {
+        const response = await api.get(
+            `/repos/amnakai/rocketseat_reactjs_desafio3/issues/${issueNumber}`
+        )
+
+        setIssue(response.data);
+    }
+
+    fetchIssue(parseInt(routeParams?.issueNumber || ''));
+
     return (
         <IssueContainer>
             <IssueTitleContainer>
 
                 <IssueTitleLinks>
-                    <a><CaretLeft size={12}/> Voltar</a>
-                    <a>GITHUB <ArrowSquareOut size={12}/></a>
+                    <NavLink to="/" title="Home">
+                        <CaretLeft size={12}/> Voltar
+                    </NavLink>
+                    
+                    <a href={issue?.html_url} target="_blank">
+                        GITHUB <ArrowSquareOut size={12}/>
+                    </a>
                 </IssueTitleLinks>
 
-                <IssuTitle>Javascript data types and data structures</IssuTitle>
+                <IssuTitle>{issue?.title}</IssuTitle>
 
                 <IssueTitleFooter>
-                    <div><Cat color="#3A536B" size={18}/> amnakai</div>
-                    <div><Calendar color="#3A536B" size={18}/> Há 1 dia</div>
-                    <div><ChatCircle color="#3A536B" size={18}/> 0 comentários</div>
+                    <div><Cat color="#3A536B" size={18}/>{issue?.user?.login}</div>
+                    <div><Calendar color="#3A536B" size={18}/>
+                    {formatDistanceToNow(new Date(issue?.created_at || new Date()), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
+                    </div>
+                    <div><ChatCircle color="#3A536B" size={18}/>{issue?.comments} comentários</div>
                 </IssueTitleFooter>
 
             </IssueTitleContainer>
 
             <IssueContent>
-            Programming languages all have built-in data structures, but these often differ from one language to another. This article base to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-
+            <ReactMarkdown children={issue?.body || ''} remarkPlugins={[remarkGfm]} ></ReactMarkdown>
             </IssueContent>
             
         </IssueContainer>
